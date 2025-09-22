@@ -1,2 +1,2 @@
-/api/archive/* https://api.nytimes.com/svc/archive/:splat 200!
+/api/* /.netlify/functions/api 200
 /* /index.html 200
