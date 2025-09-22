@@ -30,7 +30,6 @@ dist-ssr
 Thumbs.db
 .DS_Store?
 ehthumbs.db
-Icon?
 
 # Coverage directory used by tools like istanbul
 coverage/
