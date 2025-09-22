@@ -4,8 +4,8 @@ exports.handler = async (event, context) => {
   // Extract the API path after /api/
   const apiPath = path.replace('/api/', '');
 
-  // Build NY Times API URL
-  const nytimesUrl = `https://api.nytimes.com/svc/${apiPath}`;
+  // Build NY Times API URL (apiPath already contains 'svc/')
+  const nytimesUrl = `https://api.nytimes.com/${apiPath}`;
   const params = new URLSearchParams(queryStringParameters || {});
   const fullUrl = `${nytimesUrl}?${params.toString()}`;
 
