@@ -1,1 +1,2 @@
-/api/* https://api.nytimes.com/svc/:splat 200
+/api/archive/* https://api.nytimes.com/svc/archive/:splat 200!
+/* /index.html 200
