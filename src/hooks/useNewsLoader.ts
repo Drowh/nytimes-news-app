@@ -19,6 +19,11 @@ export const useNewsLoader = () => {
 
   const loadInitialNews = useCallback(async () => {
     try {
+      // Debug: Check API key availability
+      const apiKey = import.meta.env.VITE_NYTIMES_API_KEY;
+      console.log('API Key available:', !!apiKey);
+      console.log('API Key preview:', apiKey?.substring(0, 10) + '...');
+
       dispatch(setLoading(true));
       dispatch(setError(null));
 
