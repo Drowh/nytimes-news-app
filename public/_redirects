@@ -1,0 +1,1 @@
+/api/* https://api.nytimes.com/svc/:splat 200
