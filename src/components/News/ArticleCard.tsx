@@ -8,7 +8,7 @@ interface ArticleCardProps {
 export const ArticleCard = memo(({ article }: ArticleCardProps) => {
   const getImageUrl = () => {
     const image = article.multimedia?.find(
-      (media) => media.subtype === 'wide' || media.subtype === 'thumbnail'
+      (media) => media.subtype === 'xlarge' || media.subtype === 'wide' || media.subtype === 'thumbnail'
     );
     return image ? `https://www.nytimes.com/${image.url}` : null;
   };
