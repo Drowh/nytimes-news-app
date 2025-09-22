@@ -9,31 +9,66 @@ export const Header = () => {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="flex items-center justify-between px-4 py-3">
+    <header
+      className="sticky top-0 z-50 w-full"
+      style={{
+        height: '72px',
+        backgroundColor: '#FFFFFF',
+        borderBottom: '1px solid #EDEDED',
+        minWidth: '320px'
+      }}
+    >
+      <div className="relative w-full h-full flex items-center justify-between px-5">
         <button
           onClick={handleMenuClick}
-          className="p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
+          className="hover:opacity-70 focus:outline-none"
+          style={{
+            width: '20px',
+            height: '15.75px'
+          }}
           aria-label="Открыть меню"
         >
-          <svg
-            className="w-6 h-6 text-gray-700"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
+          <div className="relative w-full h-full">
+            <div style={{
+              position: 'absolute',
+              top: '0px',
+              left: '0px',
+              width: '20px',
+              height: '2px',
+              backgroundColor: '#000000'
+            }}></div>
+            <div style={{
+              position: 'absolute',
+              top: '7px',
+              left: '0px',
+              width: '20px',
+              height: '2px',
+              backgroundColor: '#000000'
+            }}></div>
+            <div style={{
+              position: 'absolute',
+              top: '14px',
+              left: '0px',
+              width: '20px',
+              height: '2px',
+              backgroundColor: '#000000'
+            }}></div>
+          </div>
         </button>
 
-        <h1 className="text-text-large font-semibold text-primary">NY Times News</h1>
+        <h1
+          className="font-lato font-bold text-center flex-1"
+          style={{
+            fontSize: '24px',
+            lineHeight: '1.2em',
+            letterSpacing: '10%',
+            color: '#000000'
+          }}
+        >
+          BESIDER
+        </h1>
 
-        <div className="w-10"></div>
+        <div style={{ width: '20px' }}></div>
       </div>
     </header>
   );

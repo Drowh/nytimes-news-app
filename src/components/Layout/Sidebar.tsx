@@ -1,6 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setSidebarOpen } from '@/store/slices/uiSlice';
 import type { RootState } from '@/store';
+import menuIcon from '@/assets/icons/menu-icon.svg';
+
+const categories = [
+  'SCIENCE',
+  'GENERAL',
+  'ENTERTAINMENT',
+  'TECHNOLOGY',
+  'BUSINESS',
+  'HEALTH',
+  'SPORTS',
+];
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
@@ -10,84 +21,48 @@ export const Sidebar = () => {
     dispatch(setSidebarOpen(false));
   };
 
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      handleClose();
-    }
+
+  const handleCategorySelect = (category: string) => {
+    console.log('Selected category:', category);
   };
 
   return (
-    <>
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={handleOverlayClick}
-        />
-      )}
-
-      <div
-        className={`fixed top-0 left-0 h-full w-80 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
+    <div
+        className={`fixed top-0 left-0 h-screen shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
+        style={{
+          width: 'min(360px, 100vw)',
+          backgroundColor: '#FFFFFF',
+          maxWidth: '100vw'
+        }}
       >
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">Меню</h2>
-          <button
-            onClick={handleClose}
-            className="p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
-            aria-label="Закрыть меню"
-          >
-            <svg
-              className="w-6 h-6 text-gray-700"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
+        <button
+          onClick={handleClose}
+          className="absolute top-5 right-5 p-0 w-5 h-5 hover:opacity-70 focus:outline-none"
+          aria-label="Закрыть меню"
+        >
+          <img src={menuIcon} alt="" className="w-full h-full" />
+        </button>
 
-        <div className="p-4">
-          <nav className="space-y-4">
-            <a
-              href="#"
-              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+        <nav className="pt-36 px-5 space-y-7 w-full">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => handleCategorySelect(category)}
+              className="block w-full text-left font-lato hover:opacity-70 transition-opacity"
+              style={{
+                fontSize: '22px',
+                fontWeight: '600',
+                lineHeight: '1.2em',
+                letterSpacing: '10%',
+                color: '#000000'
+              }}
             >
-              Главная
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              Политика
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              Технологии
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              Спорт
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              Бизнес
-            </a>
-          </nav>
-        </div>
+              {category}
+            </button>
+          ))}
+        </nav>
       </div>
-    </>
   );
 };

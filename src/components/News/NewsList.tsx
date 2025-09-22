@@ -21,11 +21,11 @@ export const NewsList = () => {
   );
 
   return (
-    <div className="pb-4">
+    <div className="pb-4 px-5">
       {sortedDates.map((date) => (
         <div key={date}>
           <DateSeparator date={date} />
-          <div className="py-2">
+          <div className="py-2 flex flex-col items-center md:items-stretch space-y-4">
             {groupedArticles[date].map((article) => (
               <ArticleCard key={article._id} article={article} />
             ))}

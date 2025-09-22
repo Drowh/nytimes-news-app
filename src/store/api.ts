@@ -17,8 +17,17 @@ export const newsApi = createApi({
     getArchiveNews: builder.query<ArchiveResponse, { year: number; month: number }>({
       query: ({ year, month }) => `${year}/${month}.json?api-key=${API_KEY}`,
       providesTags: ['News'],
-      transformErrorResponse: (response: any) => {
+      keepUnusedDataFor: 60 * 60,
+      forceRefetch: ({ currentArg, previousArg }) => {
+        return currentArg !== previousArg;
+      },
+      transformErrorResponse: (response: { data: { fault: { faultstring: string } }; status: number }) => {
         console.error('NY Times API Error:', response);
+
+        if (response.data?.fault?.faultstring?.includes('Rate limit quota violation')) {
+          return { message: 'Превышен дневной лимит запросов к NY Times API. Попробуйте позже.' };
+        }
+
         if (response.status === 401) {
           return { message: 'Неверный API ключ NY Times' };
         }
@@ -26,7 +35,7 @@ export const newsApi = createApi({
           return { message: 'Доступ к NY Times API запрещен' };
         }
         if (response.status === 429) {
-          return { message: 'Превышен лимит запросов к NY Times API' };
+          return { message: 'Превышен лимит запросов к NY Times API. Попробуйте позже.' };
         }
         if (response.status >= 500) {
           return { message: 'Сервер NY Times недоступен' };

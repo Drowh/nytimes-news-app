@@ -10,6 +10,9 @@ export default {
         background: "#FFFFFF",
         surface: "#f5f5f5",
       },
+      fontFamily: {
+        'lato': ['Lato', 'sans-serif'],
+      },
       fontSize: {
         'text-small': ['14px', '24px'],
         'text-normal': ['16px', '24px'],
@@ -17,6 +20,9 @@ export default {
         'text-x-large': ['20px', '28px'],
         'text-2x-large': ['22px', '30px'],
         'text-3x-large': ['24px', '30px'],
+      },
+      spacing: {
+        '90': '360px',
       },
       screens: {
         mobile: "360px",

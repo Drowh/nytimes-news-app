@@ -23,8 +23,11 @@ export const useNewsLoader = () => {
       dispatch(setError(null));
 
       const currentDate = new Date();
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth() + 1;
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth() + 1;
+
+      const year = currentYear > 2024 ? 2024 : currentYear;
+      const month = currentYear > 2024 ? 12 : Math.min(currentMonth, 12); 
 
       const result = await getArchiveNews({ year, month }).unwrap();
 
@@ -37,7 +40,7 @@ export const useNewsLoader = () => {
         dispatch(setLastFetchedMonth(`${year}-${month.toString().padStart(2, '0')}`));
       }
 
-    } catch (error) {
+    } catch  {
       dispatch(setError('Не удалось загрузить новости'));
     } finally {
       dispatch(setLoading(false));
@@ -59,22 +62,25 @@ export const useNewsLoader = () => {
         prevYear = year - 1;
       }
 
-      if (prevYear < 2008) {
-        dispatch(setHasMoreData(false));
-        return;
-      }
-
       const result = await getArchiveNews({ year: prevYear, month: prevMonth }).unwrap();
 
-      if (result.response?.docs) {
+      if (result.response?.docs && result.response.docs.length > 0) {
         const sortedArticles = result.response.docs
           .filter(article => article.abstract && article.web_url)
           .sort((a, b) => new Date(b.pub_date).getTime() - new Date(a.pub_date).getTime());
 
-        dispatch(addArticles(sortedArticles));
-        dispatch(setLastFetchedMonth(`${prevYear}-${prevMonth.toString().padStart(2, '0')}`));
+        if (sortedArticles.length > 0) {
+          dispatch(addArticles(sortedArticles));
+          dispatch(setLastFetchedMonth(`${prevYear}-${prevMonth.toString().padStart(2, '0')}`));
+        } else {
+          dispatch(setHasMoreData(false));
+        }
+      } else {
+        dispatch(setHasMoreData(false));
       }
     } catch (error) {
+      console.warn(`Не удалось загрузить данные:`, error);
+      dispatch(setHasMoreData(false));
     } finally {
       dispatch(setLoadingMore(false));
     }
@@ -83,8 +89,11 @@ export const useNewsLoader = () => {
   const loadLatestNews = useCallback(async () => {
     try {
       const currentDate = new Date();
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth() + 1;
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth() + 1;
+
+      const year = currentYear > 2024 ? 2024 : currentYear;
+      const month = currentYear > 2024 ? 12 : Math.min(currentMonth, 12);
 
       const result = await getArchiveNews({ year, month }).unwrap();
 
@@ -103,7 +112,8 @@ export const useNewsLoader = () => {
           dispatch(addNewArticles(latestArticles));
         }
       }
-    } catch (error) {
+    } catch {
+      dispatch(setError('Не удалось загрузить новости'));
     }
   }, [dispatch, getArchiveNews]);
 

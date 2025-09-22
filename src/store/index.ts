@@ -10,7 +10,9 @@ export const store = configureStore({
     [newsApi.reducerPath]: newsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(newsApi.middleware),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(newsApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

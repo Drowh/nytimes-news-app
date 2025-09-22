@@ -7,7 +7,7 @@ interface DateSeparatorProps {
 export const DateSeparator = memo(({ date }: DateSeparatorProps) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', {
+    return date.toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -16,8 +16,17 @@ export const DateSeparator = memo(({ date }: DateSeparatorProps) => {
   };
 
   return (
-    <div className="sticky top-16 bg-gray-100 px-4 py-3 border-b border-gray-200 z-10">
-      <h2 className="text-sm font-medium text-gray-600 uppercase tracking-wide">
+    <div className="bg-white px-4 py-3">
+      <h2
+        className="font-lato font-bold"
+        style={{
+          fontSize: '18px',
+          fontWeight: '700',
+          lineHeight: '26px',
+          letterSpacing: '0%',
+          color: '#000000'
+        }}
+      >
         {formatDate(date)}
       </h2>
     </div>
